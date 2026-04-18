@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prague Watch - Moose Runway</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--ink:#0d0c0a;--paper:#f0ead8;--red:#c0181a;--red-dark:#8b0f10;--muted:#7a6e5a;--rule:#2a2520;}
+body{background:var(--ink);color:var(--paper);font-family:'Source Serif 4',Georgia,serif;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:4px 4px;pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:rgba(13,12,10,0.85);backdrop-filter:blur(8px);border-bottom:1px solid #2a2520;}
+.nav-studio{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--paper);}
+
+/* HERO */
+.hero{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:visible;
+}
+
+/* Marvin - full bleed cover */
+.hero-marvin{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  z-index:0;
+}
+
+/* subtle dark gradient at bottom so text is readable */
+.hero::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(to right, rgba(13,12,10,0.55) 0%, transparent 45%, transparent 55%, rgba(13,12,10,0.45) 100%),
+    linear-gradient(to top, rgba(13,12,10,0.7) 0%, transparent 40%);
+  z-index:1;
+  pointer-events:none;
+}
+
+/* Text overlay grid */
+.hero-content{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:2;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:end;
+  padding:0 6vw 0;
+  gap:0;
+}
+
+.hero-left{
+  padding-right:3vw;
+  margin-bottom:6vh;
+}
+
+.hero-overline{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:clamp(9px,0.8vw,13px);
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:1.5vh;
+}
+
+.hero-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(60px,9vw,148px);
+  line-height:0.92;
+  color:var(--paper);
+  text-shadow:0 2px 40px rgba(0,0,0,0.8), 0 0 80px rgba(0,0,0,0.5);
+}
+
+.hero-title span{color:var(--red);}
+
+.hero-right{
+  margin-left:auto;
+  margin-bottom:10vh;
+  width:fit-content;
+  display:flex;
+  flex-direction:column;
+  gap:2vh;
+}
+
+.hero-tagline{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:clamp(14px,1.4vw,22px);
+  line-height:1.55;
+  color:var(--paper);
+  text-shadow:0 1px 20px rgba(0,0,0,0.9);
+  background:linear-gradient(to right, rgba(13,12,10,0.72) 0%, rgba(13,12,10,0.4) 70%, transparent 100%);
+  padding:0.4vh 3vw 0.4vh 0;
+}
+
+.hero-tagline-en{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:clamp(9px,0.75vw,12px);
+  color:var(--muted);
+  letter-spacing:0.06em;
+  margin-top:0.8vh;
+  background:linear-gradient(to right, rgba(13,12,10,0.65) 0%, rgba(13,12,10,0.3) 60%, transparent 100%);
+  padding:0.3vh 3vw 0.3vh 0;
+}
+
+.hero-quote{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:15px;
+  line-height:1.7;
+  color:rgba(240,234,216,0.75);
+  border-left:2px solid var(--red);
+  padding-left:16px;
+  text-shadow:0 1px 20px rgba(0,0,0,0.9);
+}
+
+.hero-quote cite{
+  display:block;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10px;
+  font-style:normal;
+  letter-spacing:0.14em;
+  color:var(--muted);
+  margin-top:10px;
+}
+
+.hero-ctas{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:stretch;
+}
+
+.hero-ctas .btn-p,
+.hero-ctas .btn-s{
+  width:16vw;
+  padding-left:0;
+  padding-right:0;
+  box-sizing:border-box;
+  text-align:center;
+}
+
+.btn-p{
+  display:inline-block;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:14px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  padding:20px 36px;
+  background:var(--red);
+  color:var(--paper);
+  text-decoration:none;
+  border:1px solid var(--red);
+  position:relative;
+  transition:background 0.2s;
+}
+.btn-p:hover{background:var(--red-dark);}
+
+.btn-s{
+  display:inline-block;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:14px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  padding:20px 36px;
+  background:transparent;
+  color:rgba(240,234,216,0.35);
+  border:1px solid #2a2520;
+  position:relative;
+  cursor:default;
+}
+
+.badge{
+  position:absolute;
+  top:-10px;right:-10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:9px;
+  letter-spacing:0.14em;
+  background:#1e1b17;
+  color:var(--muted);
+  border:1px solid #2a2520;
+  padding:3px 8px;
+}
+
+/* SECTION DIVIDER */
+.bullet-divider{
+  position:absolute;
+  bottom:-40px;
+  left:0;
+  right:0;
+  z-index:3;
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:0 6vw 32px;
+}
+.bullet-divider::before,
+.bullet-divider::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg, transparent, #2a2520 30%, #2a2520 70%, transparent);
+}
+.bullet-divider-icon{
+  width:8px;
+  height:8px;
+  background:var(--red);
+  transform:rotate(45deg);
+  flex-shrink:0;
+}
+.bullet-divider img{display:none;}
+
+.bullet-divider-img{
+  width:100%;
+  overflow:hidden;
+  line-height:0;
+  height:140px;
+  position:relative;
+}
+.bullet-divider-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  display:block;
+}
+.bullet-divider-img.flip img{transform:scaleX(-1);}
+
+/* SHARED */
+section{padding:80px 48px;border-top:1px solid #2a2520;}
+.sec-hd{display:flex;align-items:baseline;gap:24px;margin-bottom:48px;}
+.sec-num{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);letter-spacing:0.16em;}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:56px;color:var(--paper);line-height:1;}
+.sec-en{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-left:auto;}
+.drule{width:100%;height:1px;background:linear-gradient(90deg,transparent,#2a2520 20%,#2a2520 80%,transparent);}
+.dl-rule{height:2px;background:linear-gradient(90deg,transparent,var(--red) 20%,var(--red) 80%,transparent);margin:0;}
+.dl-wrap{margin-top:0;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+.about-body{font-family:'Source Serif 4',serif;font-size:18px;line-height:1.75;color:var(--paper);}
+.about-body p+p{margin-top:1.2em;}
+.drop-cap::first-letter{font-family:'Bebas Neue',sans-serif;font-size:5.2em;float:left;line-height:0.78;margin-right:8px;color:var(--red);}
+.sb-block{border-top:1px solid #2a2520;padding-top:20px;margin-bottom:28px;}
+.sb-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.sb-val{font-family:'Playfair Display',serif;font-size:15px;color:var(--paper);line-height:1.5;}
+
+/* SCREENSHOTS */
+.screenshots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.shot{position:relative;aspect-ratio:9/16;overflow:hidden;background:#1a1510;border:1px solid #2a2520;}
+.shot img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(0.85);transition:filter 0.3s;}
+.shot:hover img{filter:contrast(1.1) saturate(1);}
+.shot-cap{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(13,12,10,0.9));font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+
+/* WORLD */
+.world-grid{display:grid;grid-template-columns:2fr 1fr;gap:48px;}
+.world-hl{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;line-height:1.2;color:var(--paper);margin-bottom:24px;}
+.world-hl em{color:var(--red);font-style:italic;}
+.world-body{font-family:'Source Serif 4',serif;font-size:17px;line-height:1.8;color:rgba(240,234,216,0.85);}
+.world-body p+p{margin-top:1.2em;}
+.timeline{border-left:1px solid #2a2520;padding-left:24px;}
+.te{margin-bottom:28px;position:relative;}
+.te::before{content:'';position:absolute;left:-28px;top:6px;width:6px;height:6px;border-radius:50%;background:var(--red);}
+.te-year{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--red);letter-spacing:0.14em;margin-bottom:4px;}
+.te-text{font-family:'Source Serif 4',serif;font-size:14px;line-height:1.55;color:rgba(240,234,216,0.75);}
+
+/* DOWNLOAD */
+.dl-wrap{position:relative;width:100%;overflow:hidden;}
+.dl-bg{width:100%;display:block;object-fit:cover;transform:scaleX(-1);margin-top:-80px;}
+.dl-section{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;text-align:left;padding:0 6vw;border-top:none;max-width:38%;}
+.dl-over{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--red);margin-bottom:20px;}
+.dl-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,96px);color:var(--paper);line-height:1;margin-bottom:16px;}
+.dl-sub{font-family:'Source Serif 4',serif;font-style:italic;font-size:18px;color:rgba(240,234,216,0.6);margin-bottom:48px;}
+.dl-btns{display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+.btn-dl{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:0.16em;text-transform:uppercase;padding:22px 52px;background:var(--red);color:var(--paper);text-decoration:none;border:1px solid var(--red);position:relative;transition:background 0.2s;}
+.btn-dl:hover{background:var(--red-dark);}
+.btn-dlg{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:0.16em;text-transform:uppercase;padding:22px 52px;background:transparent;color:rgba(240,234,216,0.35);border:1px solid #2a2520;position:relative;cursor:default;}
+.itch-note{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--muted);margin-top:24px;}
+
+/* FOOTER */
+footer{border-top:1px solid #2a2520;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;}
+.ft-logo{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--muted);letter-spacing:0.08em;}
+.ft-copy{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3a342c;letter-spacing:0.12em;}
+.ft-links{display:flex;gap:24px;list-style:none;}
+.ft-links a{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.ft-links a:hover{color:var(--paper);}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-studio">Moose Runway Studio</span>
+  <ul class="nav-links">
+    <li><a href="#about">O hře</a></li>
+    <li><a href="#screenshots">Záběry</a></li>
+    <li><a href="#world">Svět</a></li>
+    <li><a href="#download">Získat</a></li>
+  </ul>
+</nav>
+
+<!-- HERO - Marvin full bleed, text overlaid -->
+<div class="hero">
+  <img class="hero-marvin" src="marvin_tr_bcg.webp" alt="Marvin">
+
+  <div class="hero-content reveal">
+    <!-- LEFT: title -->
+    <div class="hero-left">
+      <div class="hero-overline">Studio Moose Runway uvede</div>
+      <h1 class="hero-title">Prague<br><span>Watch</span></h1>
+      <div>
+        <p class="hero-tagline">Praha tě nezabije. Ale ráda se dívá.</p>
+        <p class="hero-tagline-en">Prague won't kill you. But it loves to watch.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT: tagline, quote, buttons - sits to the right of the red trail -->
+    <div class="hero-right">
+      
+      <!-- <blockquote class="hero-quote">
+        [Script quote placeholder]
+        <cite>- Prague Watch, scénář</cite>
+      </blockquote> -->
+      <div class="hero-ctas">
+        <a href="https://store.steampowered.com" target="_blank" class="btn-p">
+          Wishlist na Steamu
+          <span class="badge">Brzy</span>
+        </a>
+        <span class="btn-s">
+          itch.io
+          <span class="badge">Pouze stránka</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- BULLET TRAIL - pinned to hero bottom -->
+  <div class="bullet-divider">
+    <span class="bullet-divider-icon"></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" style="border-top:none;">
+  <div class="sec-hd">
+    <span class="sec-num">01 -</span>
+    <h2 class="sec-title">O&nbsp;Hře</h2>
+    <span class="sec-en">About the game</span>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-body">
+      <p class="drop-cap">V roce 1989 se nacistické Německo vzdalo spojeneckým vojskům, což značilo konec Druhé Světové Války.</p>
+      <p>Pouhých šest měsíců na to Evropa i celý svět čelily bezprecedentní ekonomické katastrofě. Mír vybojovaný krví synů a slzami matek se rozpadl téměř přes noc a starý kontinent se znovu pohroužil do doby temna. </p>
+      <p>Vlády padaly jedna za druhou a moc států, vlád, prezidentů i králů se drolila v prach. Armády, policie, zdravotnictví i školství, vše se postupně rozpadlo. Ve vzniklém mocenském vakuu se rychle rojila anarchie a kriminální živly, gangy a mafie.</p>
+      <p>V Praze, jenž bývala hlavním městem země, která už neexistuje, se však objevila skupina veteránů a žoldáků, jejichž slovo bylo zákon. Tito muži a ženy deno denně riskovali své životy, aby se jejich kousek světa také neponořil do chaosu.</p>
+      <p>Říkali si <span style="color: var(--red);">Pražská Hlídka</span>.</p>
+      
+    </div>
+    <aside>
+      <div class="sb-block"><div class="sb-label">Žánr</div><div class="sb-val">Akční thriller</div></div>
+      <div class="sb-block"><div class="sb-label">Platforma</div><div class="sb-val">PC - Steam (brzy)</div></div>
+      <div class="sb-block"><div class="sb-label">Fáze vývoje</div><div class="sb-val">Ve vývoji</div></div>
+      <div class="sb-block"><div class="sb-label">Studio</div><div class="sb-val">Moose Runway</div></div>
+      <div class="sb-block"><div class="sb-label">Engine</div><div class="sb-val">Godot 4</div></div>
+    </aside>
+  </div>
+</section>
+
+<div class="drule"></div>
+
+<!-- SCREENSHOTS -->
+<section id="screenshots">
+  <div class="sec-hd">
+    <span class="sec-num">02 -</span>
+    <h2 class="sec-title">Záběry</h2>
+    <span class="sec-en">Screenshots</span>
+  </div>
+  <div class="screenshots-grid reveal">
+    <div class="shot">
+      <img src="https://img.itch.zone/aW1hZ2UvMzQwODk1MC8yMzI3NTI0Mi5qcGc=/original/nV6xWo.jpg" alt="Screenshot 1" onerror="this.style.display='none'">
+      <div class="shot-cap">Praha v noci // Prague at night</div>
+    </div>
+    <div class="shot">
+      <img src="https://img.itch.zone/aW1hZ2UvMzQwODk1MC8yMzI3NTI0NS5qcGc=/original/9JyMBJ.jpg" alt="Screenshot 2" onerror="this.style.display='none'">
+      <div class="shot-cap">Konfrontace // Confrontation</div>
+    </div>
+    <div class="shot">
+      <img src="https://img.itch.zone/aW1hZ2UvMzQwODk1MC8yMzI3NTI0My5qcGc=/original/XASlGu.jpg" alt="Screenshot 3" onerror="this.style.display='none'">
+      <div class="shot-cap">Exil // Exile</div>
+    </div>
+  </div>
+</section>
+
+<div class="drule"></div>
+
+<!-- WORLD -->
+<section id="world" style="border-top:none;padding-bottom:0;">
+  <div class="sec-hd">
+    <span class="sec-num">03 -</span>
+    <h2 class="sec-title">Svět</h2>
+    <span class="sec-en">The world</span>
+  </div>
+  <div class="world-grid reveal">
+    <div>
+      <h3 class="world-hl">Alternativní Evropa,<br>kde <em>nic neskončilo</em><br>tak, jak mělo.</h3>
+      <div class="world-body">
+        <p>V roce 1938 Československo odmítlo Mnichovský diktát. Německo ustoupilo.</p>
+        <p>V roce 1989 série jaderných výbuchů rozmetala kontinenty i národy. USA bylo rozděleno skleněnou pouští, což zažehlo plamen nadcházející občanské války.</p>
+        <p>Rok 1996. Praha je autonomní městský stát pod kontrolou Pražské Hlídky - privátní bezpečnostní společnosti, která se změnila ve warlordskou organizaci.</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="te"><div class="te-year">1935</div><div class="te-text">Jan Masaryk ml. zvolen prezidentem Československa.</div></div>
+      <div class="te"><div class="te-year">1938</div><div class="te-text">Československo odmítá Mnichov. Mobilizace.</div></div>
+      <div class="te"><div class="te-year">1939</div><div class="te-text">Státy Malé Dohody, Polsko a pobaltí formují Visegrádskou Federaci.</div></div>
+      <div class="te"><div class="te-year">1940</div><div class="te-text">Francie padá do rukou Třetí Říše. Expanze do Afriky.</div></div>
+      <div class="te"><div class="te-year">1953</div><div class="te-text">Hitler se účastní prvního testu nové ničivé zbraně - jaderné bomby. Ostatní mocnosti výzkum rychle dohání.</div></div>
+      <div class="te"><div class="te-year">1979</div><div class="te-text">Německo napadá Visegrádskou Federaci. Druhá Světová Válka začíná.</div></div>
+      <div class="te"><div class="te-year">1989</div><div class="te-text">Jaderné výbuchy. Německá kapitulace. Miliony uprchlíků odchází z radiačních zón.</div></div>
+      <div class="te"><div class="te-year">březen 1990</div><div class="te-text">Ekonomický kolaps.</div></div>
+      <div class="te"><div class="te-year">říjen 1990</div><div class="te-text">Organizace Pražská Hlídka pod vedením Františka Doliny přebírá moc nad Prahou. Formální vláda vyhnána do exilu.</div></div>
+      <div class="te"><div class="te-year">leden 1996</div><div class="te-text" style="color:var(--red)">Probouzíš se v rozpadajícím se městě. Další den v ráji.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="drule dl-rule"></div>
+
+<!-- DOWNLOAD -->
+<div class="dl-wrap">
+  <img class="dl-bg" src="long_trail_tr.webp" alt="">
+  <section id="download" class="dl-section">
+    <div class="dl-over reveal">Přijde čas jednat</div>
+    <h2 class="dl-title reveal">Získat<br>Hru</h2>
+    <p class="dl-sub reveal">Steam - brzy k dispozici</p>
+    <div class="dl-btns reveal">
+      <a href="https://store.steampowered.com" target="_blank" class="btn-dl">
+        Wishlist na Steamu
+        <span class="badge">Brzy</span>
+      </a>
+      <span class="btn-dlg">
+        itch.io
+        <span class="badge">Pouze stránka</span>
+      </span>
+    </div>
+    <!-- <p class="itch-note reveal">Hra je příliš velká pro hosting na itch.io - slouží pouze jako informační stránka.</p> -->
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-logo">Prague Watch - Moose Runway</div>
+  <ul class="ft-links">
+    <li><a href="https://www.instagram.com/moose.runway/" target="_blank">Instagram</a></li>
+    <li><a href="https://moose-runway.itch.io/prague-dispatch" target="_blank">itch.io</a></li>
+  </ul>
+  <div class="ft-copy">© 2026 Moose Runway</div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault();
+  document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
+}));
+</script>
+</body>
+</html>
