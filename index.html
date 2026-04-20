@@ -303,6 +303,60 @@ footer{border-top:1px solid #2a2520;padding:32px 48px;display:flex;justify-conte
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
 .reveal.visible{opacity:1;transform:none;}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:10px 16px;flex-wrap:wrap;gap:8px;}
+  .nav-studio{font-size:9px;width:100%;}
+  .nav-links{gap:12px;flex-wrap:wrap;}
+  .nav-links a{font-size:9px;letter-spacing:0.1em;}
+
+  .hero-marvin{object-position:30% top;}
+
+  .hero-content{
+    grid-template-columns:1fr;
+    padding:0 5vw;
+    gap:20px;
+  }
+  .hero-left{padding-right:0;margin-bottom:0;}
+  .hero-title{font-size:clamp(64px,16vw,96px);}
+  .hero-overline{font-size:9px;}
+  .hero-right{
+    margin-left:0;
+    margin-bottom:6vh;
+    width:100%;
+  }
+  .hero-ctas .btn-p,.hero-ctas .btn-s{width:auto;display:inline-block;}
+  .hero-ctas{align-items:flex-start;}
+  .btn-p,.btn-s{font-size:11px;letter-spacing:0.12em;padding:12px 20px;}
+  .hero-ctas .btn-p,.hero-ctas .btn-s{padding:12px 20px;}
+  .hero-tagline{font-size:clamp(13px,3.5vw,17px);}
+  .hero-tagline-en{font-size:10px;}
+
+  section{padding:56px 20px;}
+  .sec-hd{gap:12px;margin-bottom:32px;}
+  .sec-title{font-size:40px;}
+  .sec-en{display:none;}
+
+  .about-grid{grid-template-columns:1fr;gap:32px;}
+  .about-body{font-size:16px;}
+
+  .world-grid{grid-template-columns:1fr;gap:32px;}
+  .world-hl{font-size:26px;}
+
+  .dl-wrap{display:flex;flex-direction:column;}
+  .dl-bg{display:none;}
+  .dl-section{
+    position:static;
+    max-width:100%;
+    padding:56px 20px;
+    border-top:1px solid #2a2520;
+  }
+  .dl-title{font-size:clamp(44px,12vw,72px);}
+
+  footer{flex-direction:column;gap:16px;padding:24px 20px;text-align:center;}
+  .ft-links{justify-content:center;}
+}
 </style>
 </head>
 <body>
@@ -332,24 +386,21 @@ footer{border-top:1px solid #2a2520;padding:32px 48px;display:flex;justify-conte
       </div>
     </div>
 
-    <!-- RIGHT: tagline, quote, buttons - sits to the right of the red trail -->
+
     <div class="hero-right">
       
-      <!-- <blockquote class="hero-quote">
-        [Script quote placeholder]
-        <cite>- Prague Watch, scénář</cite>
-      </blockquote> -->
+
       <div class="hero-ctas">
         <!-- <a href="https://store.steampowered.com" target="_blank" class="btn-p">
           Wishlist na Steamu
           <span class="badge">Brzy</span>
-        </a>
+        </a> -->
         <span class="btn-s">
-          itch.io
-          <span class="badge">Pouze stránka</span>
-        </span> -->
+          Brzy na steamu
+          <span class="badge">Comming soon</span>
+        </span>
 
-        <a href="https://moose-runway.itch.io/prague-dispatch" target="_blank" class="btn-p">
+        <a href="https://moose-runway.itch.io/prague-watch" target="_blank" class="btn-p">
           itch.io
         </a>
       </div>
@@ -455,19 +506,19 @@ footer{border-top:1px solid #2a2520;padding:32px 48px;display:flex;justify-conte
     <h2 class="dl-title reveal">Získat<br>Hru</h2>
     <p class="dl-sub reveal">Steam - brzy k dispozici</p>
     <div class="dl-btns reveal">
-      <a href="https://moose-runway.itch.io/prague-dispatch" target="_blank" class="btn-p">
+      <a href="https://moose-runway.itch.io/prague-watch" target="_blank" class="btn-p">
           itch.io
         </a>
       <!-- <a href="https://store.steampowered.com" target="_blank" class="btn-dl">
         Wishlist na Steamu
         <span class="badge">Brzy</span>
-      </a>
+      </a> -->
       <span class="btn-dlg">
-        itch.io
-        <span class="badge">Pouze stránka</span>
-      </span> -->
+        Brzy na Steamu
+        <span class="badge">Comming soon</span>
+      </span>
     </div>
-    <!-- <p class="itch-note reveal">Hra je příliš velká pro hosting na itch.io - slouží pouze jako informační stránka.</p> -->
+    
   </section>
 </div>
 
@@ -475,8 +526,7 @@ footer{border-top:1px solid #2a2520;padding:32px 48px;display:flex;justify-conte
 <footer>
   <div class="ft-logo">Prague Watch - Moose Runway</div>
   <ul class="ft-links">
-    <li><a href="https://www.instagram.com/moose.runway/" target="_blank">Instagram</a></li>
-    <li><a href="https://moose-runway.itch.io/prague-dispatch" target="_blank">itch.io</a></li>
+    <li><a href="https://moose-runway.itch.io/prague-watch" target="_blank">itch.io</a></li>
   </ul>
   <div class="ft-copy">© 2026 Moose Runway</div>
 </footer>
